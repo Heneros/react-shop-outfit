@@ -1,7 +1,7 @@
-export default function() {
+export default function indexPage() {
     return (
         <div>
-            Hello World
+           indexPage
         </div>
     )
 }

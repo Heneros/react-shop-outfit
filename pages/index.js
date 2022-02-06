@@ -1,7 +1,10 @@
+import Page from '../components/Page';
 export default function indexPage() {
     return (
-        <div>
+        <>
            indexPage
-        </div>
+           <code>test</code>
+           
+        </>
     )
 }

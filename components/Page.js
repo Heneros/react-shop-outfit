@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types';
-export default function Page({props, children, cool}){
-    return <div>
-        <h2>Hello from Page.js</h2>
-        {/* {props.children} */}
-         {children}
-         {cool}
+import Header from './Header';  
+
+export default function Page({ props, children, cool }) {
+  return (
+    <div>
+      <Header />
+      <h2>Hello from Page.js</h2>
+      {/* {props.children} */}
+      {children}
+      {cool}
     </div>
+  );
 }
 
 Page.prototype = {
-    cool: PropTypes.string,
-    children: PropTypes.any
+  cool: PropTypes.string,
+  children: PropTypes.any,
 };

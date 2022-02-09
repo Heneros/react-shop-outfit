@@ -1,6 +1,3 @@
 export default function OrdersPage() {
-    return <div>
-           orders Page
-    </div>
-    
+  return <div>orders Page</div>;
 }

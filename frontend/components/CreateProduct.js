@@ -4,6 +4,7 @@ import useForm from '../lib/useForm';
 import DisplayError from './ErrorMessage';
 import { ALL_PRODUCTS_QUERY } from './Products';
 import Form from './styles/Form';
+import Router from 'next/router';
 
 
 const CREATE_PRODUCT_MUTATION = gql`
@@ -49,8 +50,12 @@ export default function CreateProduct() {
     <Form
       onSubmit={async (e) => {
         e.preventDefault();
-        await createProduct();
+        const res = await createProduct();
         clearForm();
+
+        Router.push({
+          pathname: `/product/${res.data.createProduct.id}`
+        })
       }}
     >
        <DisplayError error={error}/>

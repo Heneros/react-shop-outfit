@@ -3,7 +3,7 @@ import Title from './styles/Title';
 import Link from 'next/link';
 import PriceTag from './styles/PriceTag';
 import formatMoney from '../lib/formatMoney';
- 
+ import DeleteProduct from "./DeleteProduct";
 
 
 export default function Product({ product }){
@@ -20,7 +20,9 @@ export default function Product({ product }){
                  query: {
                      id: product.id
                  }
-            }}>Edit </Link> </div>
+            }}>Edit </Link>
+            <DeleteProduct id={product.id} >Delete</DeleteProduct>
+             </div>
          </ItemStyles>
          )
 }

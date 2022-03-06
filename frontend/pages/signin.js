@@ -1,10 +1,10 @@
-import Products from '../components/Products';
+import SignIn from '../components/SignIn';
 
 
 export default function SignInPage() {
   return (
     <div>
-      <p>SignInPage</p>
+    <SignIn/>
     </div>
   );
 }

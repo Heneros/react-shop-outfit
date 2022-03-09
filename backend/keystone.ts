@@ -11,7 +11,7 @@ import { insertSeedData } from './seed-data';
 const databaseURL = process.env.DATABASE_URL || 'mongodb://localhost/sick-fits';
 
 
-//Rustam  yes123da
+
 const sessionConfig = {
     maxAge: 60  * 60 * 24 * 360,
     secret: process.env.COOKIE_SECRET,
@@ -23,7 +23,12 @@ const { withAuth } = createAuth({
     secretField: 'password',
     initFirstItem: {
         fields: ['name', 'email', 'password']
-    }
+    },
+    passwordResetLink:{
+      async sendToken(args){
+        console.log(args);
+      },
+    },
 });
 
 export default withAuth(config({

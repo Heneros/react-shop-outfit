@@ -12,9 +12,9 @@ const SIGNUP_MUTATION = gql`
        $password: String!
    ){
        createUser(data: {email: $email, name: $name, password: $password}){
+            id
             email
             name
-            password
        }
    }
 `;
@@ -38,9 +38,7 @@ async function handleSubmit(e){
 
 // const error = data?.authenticateUserWithPassword.__typename === "UserAuthenticationWithPasswordFailure" ? data?.authenticateUserWithPassword : undefined;
 
-if(data?.createUser){
-    return;
-}
+
 
 return( <Form method="POST" onSubmit={handleSubmit}>
        <h2>SignUp for Account</h2>
@@ -82,7 +80,7 @@ return( <Form method="POST" onSubmit={handleSubmit}>
            onChange={handleChange}
            />
         </label>
-        <button type="submit">Sign In!</button>
+        <button type="submit">Sign Up!</button>
        </fieldset>
     </Form>)
 }

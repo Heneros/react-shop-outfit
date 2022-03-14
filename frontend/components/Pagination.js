@@ -21,7 +21,7 @@ export const PAGINATION_QUERY = gql`
  const pageCount = Math.ceil(count / perPage);
  return  (<PaginationStyles>
          <Head>
-             <title>Sick Shop - Page {page} </title>
+             <title>Sick Shop - Page {page} of {pageCount} </title>
          </Head>
          <Link 
          href={`/products/${page - 1}`} 

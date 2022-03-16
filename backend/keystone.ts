@@ -10,6 +10,7 @@ import {withItemData, statelessSessions } from '@keystone-next/keystone/session'
 import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
+import { extendGraphqlSchema } from './mutations';
 
 const databaseURL = process.env.DATABASE_URL || 'mongodb://localhost/sick-fits';
 
@@ -59,6 +60,7 @@ export default withAuth(config({
         ProductImage,
         CartItem
     }),
+    extendGraphqlSchema,
     ui:{
         isAccessAllowed:({ session }) => 
              !!session?.data,

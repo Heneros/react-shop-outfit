@@ -1,13 +1,14 @@
-import { KeystoneContext } from "@keystone-next/types";
+import { KeystoneContext, SessionStore  } from "@keystone-next/types";
 import { CartItemCreateInput } from '../.keystone/schema-types';
 import { Session } from "../types";
+import { CartItem } from '../schemas/CartItem';
 
  async function addToCart(
     root: any,
     { productId }: { productId: string},
     context: KeystoneContext
 ): Promise<CartItemCreateInput> {
-    console.log("Working???");
+    console.log("Add to Cart");
 
     const sesh = context.session as Session;
 
@@ -17,25 +18,30 @@ import { Session } from "../types";
 
     const allCartItems = await context.lists.CartItem.findMany({
         where: { user: { id: sesh.itemId}, product: { id: productId}},
-        resolveField: 'id, quantity'
+        resolveFields: 'id,quantity'
     });
 
     const [existingCartItem] = allCartItems;
     if(existingCartItem){
-        console.log("Thre are already increment");
-    }
+        console.log("There are already incremented");
+  
 
-    return await context.lists.CartItem.updateOne({
-        id: existingCartItem.id,
-        data: { quantity: existingCartItem.quantity + 1},
-    });
-
+        return await context.lists.CartItem.updateOne({
+            id: existingCartItem.id,
+            data: { quantity: existingCartItem.quantity + 1 },
+            resolveFields: false,
+          });
+}
     return await context.lists.CartItem.createOne({
         data: {
-            product: { connect: { id: productId}},
-            user: { connect: { id: sesh.itemId} }}
-        }
+            product: { connect: { id: productId }},
+            user:    { connect: { id: sesh.itemId} },
+        },
+        resolveFields: false,
     })
+
+    
 }
+
 
 export default addToCart;

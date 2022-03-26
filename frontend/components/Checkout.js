@@ -7,6 +7,9 @@ import nProgress from 'nprogress';
 import { element } from "prop-types";
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
+import { useRouter } from 'next/dist/client/router';
+import { useCart } from '../lib/cartState';
+import { CURRENT_USER_QUERY } from "./User";
 
 const CheckoutFormStyles = styled.form`
      box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.4);
@@ -38,7 +41,11 @@ const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
     const [loading, setLoading ] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
-    const [checkout, {error: graphQLError}] = useMutation(CREATE_ORDER_MUTATION);
+    const router = useRouter();
+    const {closeCart} = useCart();
+    const [checkout, {error: graphQLError}] = useMutation(CREATE_ORDER_MUTATION, {
+        refetchQueries: [{ query: CURRENT_USER_QUERY}]
+    });
     async function handleSubmit(e){
         setLoading(true);
         e.preventDefault();
@@ -59,6 +66,14 @@ const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
                 token: paymentMethod.id
             }
         });
+
+        router.push({
+            pathname: `/order/[id]`,
+            query: {
+                 id: order.data.checkout.id
+                },
+        })
+        closeCart()
         setLoading(false);
         nProgress.done();
     }

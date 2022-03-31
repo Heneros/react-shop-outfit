@@ -14,6 +14,7 @@ import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations';
+import { permissionsList } from './schemas/fields';
 
 const databaseURL = process.env.DATABASE_URL || 'mongodb://localhost/sick-fits';
 
@@ -73,7 +74,7 @@ export default withAuth(config({
     },
     session: withItemData(statelessSessions(sessionConfig), {
         secret: 'asdsad',
-        User: 'id name email',
+        User: `id name email {${permissionsList.join(' ')} } `,
        
       }),
 })

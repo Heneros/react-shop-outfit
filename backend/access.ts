@@ -17,7 +17,7 @@ const generatedPermissions = Object.fromEntries(
 export const permissions = {
   ...generatedPermissions,
   isAwesome({ session }: ListAccessArgs): boolean {
-    return session?.data.name.includes('wes');
+    return session?.data.name.includes('rustam');
   },
 };
 
@@ -28,5 +28,13 @@ export const rules = {
         }
 
         return { user: {id: session.itemId} };
+    },
+
+    canReadProducts({ session }: ListAccessArgs ){
+      if(permissions.canManageProducts({ session})){
+        return true;
+      }
+
+      return { status: 'AVAILABLE'}
     }
 }
